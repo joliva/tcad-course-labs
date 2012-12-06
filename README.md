@@ -1,0 +1,1 @@
+These are a series of exercises that go along with the Appcelerator TCAD training.
