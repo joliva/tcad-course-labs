@@ -1,2 +1,1 @@
-tcad_course_labs
-================
+These are a series of exercises that go along with the Appcelerator TCAD training.
