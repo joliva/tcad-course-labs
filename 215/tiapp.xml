@@ -9,7 +9,7 @@
     </deployment-targets>
     <sdk-version>2.1.4.GA</sdk-version>
     <id>com.olivalabs.bountyhunter215</id>
-    <name>BountyHunter_215</name>
+    <name>BH_215</name>
     <version>1.0.215</version>
     <publisher>John Oliva</publisher>
     <url>http://olivalabs.com</url>
