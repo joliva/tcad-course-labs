@@ -10,11 +10,11 @@
     <sdk-version>2.1.4.GA</sdk-version>
     <id>com.olivalabs.bountyhunter215</id>
     <name>BountyHunter_215</name>
-    <version>1.0</version>
-    <publisher>jlo</publisher>
-    <url>http://</url>
+    <version>1.0.215</version>
+    <publisher>John Oliva</publisher>
+    <url>http://olivalabs.com</url>
     <description>not specified</description>
-    <copyright>2012 by jlo</copyright>
+    <copyright>2012 by John Oliva</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
