@@ -2,4 +2,5 @@
 <resources>
     <string name="Fugitives">Fugitives</string>
     <string name="Captured">Captured</string>
+    <string name="NewFugitive">New Fugitive</string>
 </resources>
