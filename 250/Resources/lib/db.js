@@ -12,7 +12,6 @@ DB.prototype.list = function(isCaptured){
 	
 	var db = Ti.Database.open('TiBountyHunter');	
 	var resultSet = db.execute('SELECT id, name FROM fugitives WHERE captured = ' + (isCaptured ? '1' : '0'));
-	db.close();
 	
 	while (resultSet.isValidRow()) {
 		var row = Ti.UI.createTableViewRow({
@@ -25,6 +24,7 @@ DB.prototype.list = function(isCaptured){
 	}
 	
 	resultSet.close();
+	db.close();
 	return results;
 }
 
@@ -32,19 +32,29 @@ DB.prototype.list = function(isCaptured){
 DB.prototype.add = function(fugitiveName){
 	var db = Ti.Database.open('TiBountyHunter');	
 	db.execute('INSERT INTO fugitives (name, captured) VALUES (?,?)', fugitiveName, 0);
+	var lastID = db.lastInsertRowId;
 	db.close();
 	
 	Ti.App.fireEvent('app:db_add', {name:fugitiveName});
+	return lastID;
 }
 
 // Deletes the fugitive with the given ID. Fires the 'database updated' App-level event.
 DB.prototype.del = function(fugitiveId){
+	var db = Ti.Database.open('TiBountyHunter');	
+	db.execute('DELETE FROM fugitives WHERE id=?', fugitiveId);
+	db.close();
 	
+	Ti.App.fireEvent('app:db_delete', {id:fugitiveId});	
 }
 
 // Marks the fugitive with the given ID as captured. Fires the 'database updated' App-level event.
 DB.prototype.bust = function(fugitiveId){
+	var db = Ti.Database.open('TiBountyHunter');	
+	db.execute('UPDATE fugitives SET captured=? WHERE id=?', 1, fugitiveId);
+	db.close();
 	
+	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
 }
 
 module.exports = DB;
