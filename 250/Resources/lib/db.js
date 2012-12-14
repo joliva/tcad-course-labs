@@ -8,7 +8,9 @@ function DB() {
 DB.prototype.list = function(isCaptured){
 	var results = [];	// array to hold query result as table rows
 	
+	var db = Ti.Database.open('TiBountyHunter');	
 	var resultSet = db.execute('SELECT id, name FROM fugitives WHERE captured = ' + (isCaptured ? '1' : '0'));
+	db.close();
 	
 	while (resultSet.isValidRow()) {
 		var row = Ti.UI.createTableViewRow({
@@ -25,7 +27,11 @@ DB.prototype.list = function(isCaptured){
 }
 
 DB.prototype.add = function(fugitiveName){
+	var db = Ti.Database.open('TiBountyHunter');	
+	db.execute('INSERT INTO fugitives (name, captured) VALUES (?,?)', fugitiveName, 0);
+	db.close();
 	
+	Ti.App.fireEvent('app:db_add', {name:fugitiveName});
 }
 
 DB.prototype.del = function(fugitiveId){
