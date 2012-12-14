@@ -8,12 +8,33 @@ function DB() {
 // Returns a set of table rows representing either captured or at-large fugitives. Each row should have title, id, 
 // hasChild=true, color='#fff', name (duplicate of title), and captured=boolean properties.
 DB.prototype.list = function(isCaptured){
+	var results = [];	// array to hold query result as table rows
 	
+	var db = Ti.Database.open('TiBountyHunter');	
+	var resultSet = db.execute('SELECT id, name FROM fugitives WHERE captured = ' + (isCaptured ? '1' : '0'));
+	db.close();
+	
+	while (resultSet.isValidRow()) {
+		var row = Ti.UI.createTableViewRow({
+			id: resultSet.fieldByName('id'),
+			name: resultSet.fieldByName('name')
+		});
+		
+		results.push(row);
+		resultSet.next();
+	}
+	
+	resultSet.close();
+	return results;
 }
 
 // Adds the named fugitive to the database. Fires an App-level event noting that the database has been updated.
 DB.prototype.add = function(fugitiveName){
+	var db = Ti.Database.open('TiBountyHunter');	
+	db.execute('INSERT INTO fugitives (name, captured) VALUES (?,?)', fugitiveName, 0);
+	db.close();
 	
+	Ti.App.fireEvent('app:db_add', {name:fugitiveName});
 }
 
 // Deletes the fugitive with the given ID. Fires the 'database updated' App-level event.
