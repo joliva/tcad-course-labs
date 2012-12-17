@@ -1,30 +1,24 @@
 var populateTable = function(isFugitive) {
-	var people;
-	
+	var populateData = function(isFugitive) {
+		var DB = require('/lib/db');
+		var db = new DB();
+		
+		var data =  db.list(!isFugitive);
+		
+		tblView.setData(data);		
+		}
+
 	var tblView = Ti.UI.createTableView({
 		backgroundColor:'transparent'
 	});
 	
-	if (isFugitive === true) {
-		people = ['Arlene', 'John', 'Lauren', 'Kristen'];
-	} else {	// captured
-		people = ['Diane', 'Lew', 'Robert', 'Patti'];
-	}
+	Ti.App.addEventListener('app:db_update', function(e) {
+		populateData(isFugitive);
+	});
 	
-	var data = [];	// holds table view rows
-	
-	for (var i=0, length=people.length; i<length; i++){
-		data.push(Ti.UI.createTableViewRow({
-			title:people[i],	// row text
-			color:'white',		// text color
-			hasChild:true,
-			captured:!isFugitive
-		}));
-	}
-	
-	tblView.setData(data);
-	
+	populateData(isFugitive);
 	return tblView;
 };
+
 
 module.exports = populateTable;

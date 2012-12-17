@@ -22,6 +22,14 @@ var makeWindow = function(person) {
 		width:200
 	});
 	
+	btnDelete.addEventListener('click', function(e) {
+		var DB = require('/lib/db');
+		var db = new DB();
+		Ti.API.log('delete ' + person.id.toString());
+		db.del(person.id);
+		win.close();
+	});
+	
 	view.add(lblStatus);
 	view.add(btnDelete);
 	
@@ -31,6 +39,15 @@ var makeWindow = function(person) {
 			top:15,
 			width:200
 		});
+		
+		btnCapture.addEventListener('click', function(e) {
+			var DB = require('/lib/db');
+			var db = new DB();
+			Ti.API.log('busted ' + person.id.toString());
+			db.bust(person.id);
+			win.close();
+		});
+		
 		view.add(btnCapture);
 	}
 	

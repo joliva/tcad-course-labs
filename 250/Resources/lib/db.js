@@ -11,12 +11,15 @@ DB.prototype.list = function(isCaptured){
 	var results = [];	// array to hold query result as table rows
 	
 	var db = Ti.Database.open('TiBountyHunter');	
-	var resultSet = db.execute('SELECT id, name FROM fugitives WHERE captured = ' + (isCaptured ? '1' : '0'));
+	var resultSet = db.execute('SELECT * FROM fugitives WHERE captured = ' + (isCaptured ? '1' : '0'));
 	
 	while (resultSet.isValidRow()) {
 		var row = Ti.UI.createTableViewRow({
 			id: resultSet.fieldByName('id'),
-			name: resultSet.fieldByName('name')
+			title: resultSet.fieldByName('name'),
+			captured: resultSet.fieldByName('captured'),
+			color:'white',		// text color
+			hasChild:true
 		});
 		
 		results.push(row);
@@ -35,7 +38,7 @@ DB.prototype.add = function(fugitiveName){
 	var lastID = db.lastInsertRowId;
 	db.close();
 	
-	Ti.App.fireEvent('app:db_add', {name:fugitiveName});
+	Ti.App.fireEvent('app:db_update', {name:fugitiveName});
 	return lastID;
 }
 
@@ -45,7 +48,7 @@ DB.prototype.del = function(fugitiveId){
 	db.execute('DELETE FROM fugitives WHERE id=?', fugitiveId);
 	db.close();
 	
-	Ti.App.fireEvent('app:db_delete', {id:fugitiveId});	
+	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
 }
 
 // Marks the fugitive with the given ID as captured. Fires the 'database updated' App-level event.
