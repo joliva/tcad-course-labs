@@ -1,8 +1,32 @@
-function DB() {
+var DB = function () {
 	//bootstrap the database
 	var db = Ti.Database.open('TiBountyHunter');	
 	db.execute('CREATE TABLE IF NOT EXISTS fugitives(id INTEGER PRIMARY KEY, name TEXT, captured INTEGER);');	
 	db.close();
+
+/*	
+	var isSeeded = Ti.App.Properties.getBool('seeded', false);
+
+	var seedFugitives = function(e) {
+		// add fugitives received from web service
+		Ti.API.debug('received fugitives' + this.responseText)
+		var fugitiveArray = JSON.parse(this.responseText);
+				
+		for (var i=0, l=fugitiveArray.length; i < l; i++) {
+			DB.prototype.add(fugitiveArray[i].name);
+		};
+		
+		// only runs once
+		Ti.App.Properties.setBool('seeded', true);
+	};
+	
+	if (!isSeeded) {
+		var Network = require('/lib/network');
+		var network = new Network();
+		
+		network.getFugitives(seedFugitives);
+	};
+*/
 }
 
 // Returns a set of table rows representing either captured or at-large fugitives. Each row should have title, id, 
@@ -59,5 +83,27 @@ DB.prototype.bust = function(fugitiveId){
 	
 	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
 }
+
+var isSeeded = Ti.App.Properties.getBool('seeded', false);
+
+var seedFugitives = function(e) {
+	// add fugitives received from web service
+	Ti.API.debug('received fugitives' + this.responseText)
+	var fugitiveArray = JSON.parse(this.responseText);
+			
+	for (var i=0, l=fugitiveArray.length; i < l; i++) {
+		DB.prototype.add(fugitiveArray[i].name);
+	};
+	
+	// only runs once
+	Ti.App.Properties.setBool('seeded', true);
+};
+
+if (!isSeeded) {
+	var Network = require('/lib/network');
+	var network = new Network();
+	
+	network.getFugitives(seedFugitives);
+};
 
 module.exports = DB;

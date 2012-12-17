@@ -25,7 +25,7 @@ var makeWindow = function(person) {
 	btnDelete.addEventListener('click', function(e) {
 		var DB = require('/lib/db');
 		var db = new DB();
-		Ti.API.log('delete ' + person.id.toString());
+		//Ti.API.log('delete ' + person.id.toString());
 		db.del(person.id);
 		win.close();
 	});
@@ -40,11 +40,21 @@ var makeWindow = function(person) {
 			width:200
 		});
 		
+		var bustedResponder = function (e) {
+			var response = JSON.parse(this.responseText);
+			alert(response.message);
+		};
+		
 		btnCapture.addEventListener('click', function(e) {
 			var DB = require('/lib/db');
 			var db = new DB();
-			Ti.API.log('busted ' + person.id.toString());
+			//Ti.API.log('busted ' + person.id.toString());
 			db.bust(person.id);
+			
+			var Network = require('/lib/network');
+			var network = new Network();
+			network.bustFugitive(Ti.Platform.getMacaddress(), bustedResponder);
+
 			win.close();
 		});
 		
