@@ -5,6 +5,20 @@ var mainFunc = (function() {
 	var theApp = new ApplicationTabGroup();
 	theApp.open();
 	
+	Ti.API.trace('test trace log');
+	Ti.API.debug('test debug log');
+	Ti.API.info('test info log');
+	Ti.API.trace('test trace log');
+	Ti.API.warn('test warning log');
+	Ti.API.error('test error log');
+	
+	var Network = require('/lib/network');
+	var network = new Network();
+	
+	network.getFugitives(function(e) {
+		Ti.API.log(e);
+	});
+
 	/*
 	Ti.App.addEventListener('app:db_add', function(e) {
 		Ti.API.log('DB added: ' + e.name);
