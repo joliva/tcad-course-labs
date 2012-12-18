@@ -12,7 +12,7 @@ var makeWindow = function() {
 		borderStyle: Ti.UI.INPUT_BORDERSTYLE_ROUNDED,
 		top: 20,
 		color: 'black',
-		hintText: 'Enter Fugitive Name',
+		hintText: L('Enter Fugitive Name'),
 		width: 250
 	});
 

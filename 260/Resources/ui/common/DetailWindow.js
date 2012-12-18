@@ -11,13 +11,13 @@ var makeWindow = function(person) {
 	});
 	
 	var lblStatus = Ti.UI.createLabel({
-		text:person.captured ? 'Busted' : 'Still At Large',
+		text:person.captured ? L('Busted') : L('StillAtLarge'),
 		color:'white',
 		top: 20
 	});
 
 	var btnDelete = Ti.UI.createButton({
-		title:'Delete',
+		title:L('Delete'),
 		top:30,
 		width:200
 	});
@@ -35,7 +35,7 @@ var makeWindow = function(person) {
 	
 	if (!person.captured){
 		var btnCapture = Ti.UI.createButton({
-			title:'Capture',
+			title:L('Capture'),
 			top:15,
 			width:200
 		});

@@ -6,7 +6,7 @@ var makeWindow = function(parent, isFugitive) {
 		activity: {
 			onCreateOptionsMenu : function(e) {
 				var menu = e.menu;
-				var menuItem = menu.add({title:'Add'});
+				var menuItem = menu.add({title:L('Add')});
 				menuItem.addEventListener('click', function(e) {
 					var AddWindow = require('ui/common/AddWindow');
 					var awin = new AddWindow();
@@ -30,7 +30,7 @@ var makeWindow = function(parent, isFugitive) {
 	if (osname === 'iphone') {
 		// add right nav button to add new fugitive
 		var button = Ti.UI.createButton({
-			title:'Add'
+			title:L('Add')
 		});
 		
 		win.rightNavButton = button;
