@@ -146,14 +146,50 @@ var makeWindow = function(person) {
 		btnCapture.addEventListener('click', function(e) {
 			var DB = require('/lib/db');
 			var db = new DB();
-			//Ti.API.log('busted ' + person.id.toString());
-			db.bust(person.id);
 			
-			var Network = require('/lib/network');
-			var network = new Network();
-			network.bustFugitive(Ti.Platform.getMacaddress(), bustedResponder);
+			
+			if (Ti.Geolocation.locationServicesEnabled) {
+				var osname = Ti.Platform.getOsname();
+				
+				// platform specific geolocation handling
+				if (osname === 'iphone') {
+					// set to a message meaningful to users
+					Ti.Geolocation.purpose = 'Store Location of Captured Fugitive';
+					
+					Ti.Geolocation.setAccuracy(Ti.Geolocation.ACCURACY_BEST);			
+				} else if (osname === 'android') {
+					Ti.Geolocation.setAccuracy(Ti.Geolocation.ACCURACY_HIGH);								
+				} else {
+					Ti.API.debug('Unsupported platform: ' + osname);
+				}
+				
+				Ti.Geolocation.getCurrentPosition(function (e) {
+					if (!e.error) {				
+						Ti.API.log('got lat/lon: ' + e.coords.latitude.toString() + '/' + e.coords.longitude.toString());
+					    db.bust(person.id, e.coords.latitude, e.coords.longitude);
+						
+						var Network = require('/lib/network');
+						var network = new Network();
+						network.bustFugitive(Ti.Platform.getMacaddress(), bustedResponder);
+					} else {
+						alert ('Geolocation Error: ' + e.error);
+						//Ti.API.debug('Error: ' + e.error);
+					}
+									
+					win.close();							
+				});
+			} else {
+			    alert('Location services disabled - using default location');
+			    
+			    // East Brunswick, NJ - 40.4342° N, 74.4050° W
+			    db.bust(person.id, 40.4342, -74.4050);
 
-			win.close();
+				var Network = require('/lib/network');
+				var network = new Network();
+				network.bustFugitive(Ti.Platform.getMacaddress(), bustedResponder);
+	
+				win.close();
+			}
 		});
 		
 		view.add(btnCapture);
