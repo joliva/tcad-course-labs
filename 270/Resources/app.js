@@ -4,29 +4,5 @@ var mainFunc = (function() {
 	var ApplicationTabGroup = require('ui/common/ApplicationTabGroup');
 	var theApp = new ApplicationTabGroup();
 	theApp.open();
-	
-	/*
-	var Network = require('/lib/network');
-	var network = new Network();
-	
-	network.getFugitives(function(e) {
-		Ti.API.debug('received reponse: ' + this.responseText);
-	});
-
-	Ti.App.addEventListener('app:db_add', function(e) {
-		Ti.API.log('DB added: ' + e.name);
-	});
-
-	Ti.App.addEventListener('app:db_delete', function(e) {
-		Ti.API.log('DB deleted id: ' + e.id);
-	});
-		
-	var DB = require('/lib/db');
-	var db = new DB();
-	db.add('foo');
-	var id = db.add('bar');
-	db.add('baz');
-	db.del(id);
-	*/
 })();
 

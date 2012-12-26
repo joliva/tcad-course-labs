@@ -1,7 +1,7 @@
 var DB = function () {
 	//bootstrap the database
 	var db = Ti.Database.open('TiBountyHunter');	
-	db.execute('CREATE TABLE IF NOT EXISTS fugitives(id INTEGER PRIMARY KEY, name TEXT, url TEXT, captured INTEGER);');	
+	db.execute('CREATE TABLE IF NOT EXISTS fugitives(id INTEGER PRIMARY KEY, name TEXT, url TEXT, captured INTEGER, capturedLat REAL, capturedLon REAL);');	
 	db.close();
 }
 
@@ -19,6 +19,8 @@ DB.prototype.list = function(isCaptured){
 			title: resultSet.fieldByName('name'),
 			url: resultSet.fieldByName('url'),
 			captured: resultSet.fieldByName('captured'),
+			capturedLat: resultSet.fieldByName('capturedLat'),
+			capturedLon: resultSet.fieldByName('capturedLon'),
 			color:'white',		// text color
 			hasChild:true
 		});
@@ -35,7 +37,7 @@ DB.prototype.list = function(isCaptured){
 // Adds the named fugitive to the database. Fires an App-level event noting that the database has been updated.
 DB.prototype.add = function(fugitiveName){
 	var db = Ti.Database.open('TiBountyHunter');	
-	db.execute('INSERT INTO fugitives (name, captured, url) VALUES (?,?,?)', fugitiveName, 0, '');
+	db.execute('INSERT INTO fugitives (name, captured, url, capturedLat, capturedLon) VALUES (?,?,?,?,?)', fugitiveName, 0, '', 0 , 0);
 	var lastID = db.lastInsertRowId;
 	db.close();
 	
@@ -53,9 +55,9 @@ DB.prototype.del = function(fugitiveId){
 }
 
 // Marks the fugitive with the given ID as captured. Fires the 'database updated' App-level event.
-DB.prototype.bust = function(fugitiveId){
+DB.prototype.bust = function(fugitiveId, latitude, longitude){
 	var db = Ti.Database.open('TiBountyHunter');	
-	db.execute('UPDATE fugitives SET captured=? WHERE id=?', 1, fugitiveId);
+	db.execute('UPDATE fugitives SET captured=?, capturedLat=?, capturedLon=? WHERE id=?', 1, latitude, longitude, fugitiveId);
 	db.close();
 	
 	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
