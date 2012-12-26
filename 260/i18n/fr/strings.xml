@@ -8,4 +8,5 @@
     <string name="Delete">Effacer</string>
     <string name="Capture">Capturer</string>
     <string name="Add">Ajouter</string>
+    <string name="AddPhoto">Ajouter la Photo</string>
 </resources>

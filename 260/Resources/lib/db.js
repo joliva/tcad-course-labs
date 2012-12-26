@@ -1,32 +1,8 @@
 var DB = function () {
 	//bootstrap the database
 	var db = Ti.Database.open('TiBountyHunter');	
-	db.execute('CREATE TABLE IF NOT EXISTS fugitives(id INTEGER PRIMARY KEY, name TEXT, captured INTEGER);');	
+	db.execute('CREATE TABLE IF NOT EXISTS fugitives(id INTEGER PRIMARY KEY, name TEXT, url TEXT, captured INTEGER);');	
 	db.close();
-
-/*	
-	var isSeeded = Ti.App.Properties.getBool('seeded', false);
-
-	var seedFugitives = function(e) {
-		// add fugitives received from web service
-		Ti.API.debug('received fugitives' + this.responseText)
-		var fugitiveArray = JSON.parse(this.responseText);
-				
-		for (var i=0, l=fugitiveArray.length; i < l; i++) {
-			DB.prototype.add(fugitiveArray[i].name);
-		};
-		
-		// only runs once
-		Ti.App.Properties.setBool('seeded', true);
-	};
-	
-	if (!isSeeded) {
-		var Network = require('/lib/network');
-		var network = new Network();
-		
-		network.getFugitives(seedFugitives);
-	};
-*/
 }
 
 // Returns a set of table rows representing either captured or at-large fugitives. Each row should have title, id, 
@@ -41,6 +17,7 @@ DB.prototype.list = function(isCaptured){
 		var row = Ti.UI.createTableViewRow({
 			id: resultSet.fieldByName('id'),
 			title: resultSet.fieldByName('name'),
+			url: resultSet.fieldByName('url'),
 			captured: resultSet.fieldByName('captured'),
 			color:'white',		// text color
 			hasChild:true
@@ -58,7 +35,7 @@ DB.prototype.list = function(isCaptured){
 // Adds the named fugitive to the database. Fires an App-level event noting that the database has been updated.
 DB.prototype.add = function(fugitiveName){
 	var db = Ti.Database.open('TiBountyHunter');	
-	db.execute('INSERT INTO fugitives (name, captured) VALUES (?,?)', fugitiveName, 0);
+	db.execute('INSERT INTO fugitives (name, captured, url) VALUES (?,?,?)', fugitiveName, 0, '');
 	var lastID = db.lastInsertRowId;
 	db.close();
 	
@@ -79,6 +56,15 @@ DB.prototype.del = function(fugitiveId){
 DB.prototype.bust = function(fugitiveId){
 	var db = Ti.Database.open('TiBountyHunter');	
 	db.execute('UPDATE fugitives SET captured=? WHERE id=?', 1, fugitiveId);
+	db.close();
+	
+	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
+}
+
+// Saves an url to a photo for the fugitive with the given ID. Fires the 'database updated' App-level event.
+DB.prototype.addPhoto = function(fugitiveId, url){
+	var db = Ti.Database.open('TiBountyHunter');	
+	db.execute('UPDATE fugitives SET url=? WHERE id=?', url, fugitiveId);
 	db.close();
 	
 	Ti.App.fireEvent('app:db_update', {id:fugitiveId});	
