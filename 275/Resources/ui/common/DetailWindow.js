@@ -12,8 +12,10 @@ var makeWindow = function(parentTab, person) {
 	
 	var viewPhoto = Ti.UI.createImageView({
 		image:'/burglar.png',
+		//borderWidth: 2,
+		//borderColor: 'black',
 		top:15,
-		//width:200,
+		//width:Ti.UI.SIZE,
 		height:150
 	});
 	
@@ -29,17 +31,28 @@ var makeWindow = function(parentTab, person) {
 		top: 5
 	});
 
+	var viewHoriz = Ti.UI.createView({
+		layout:'horizontal',
+		horizontalWrap: false,
+		top:20,
+		height:Ti.UI.SIZE,		
+		width:Ti.UI.FILL		
+	});
+	
 	var btnPhoto = Ti.UI.createButton({
 		title:L('AddPhoto'),
-		top:20,
-		width:200
+		left:'11%',
+		width:'33%'
 	});
 	
 	var btnDelete = Ti.UI.createButton({
 		title:L('Delete'),
-		top:10,
-		width:200
+		left: '11%',
+		width:'33%'
 	});
+	
+	viewHoriz.add(btnPhoto);
+	viewHoriz.add(btnDelete);
 	
 	btnDelete.addEventListener('click', function(e) {
 		var DB = require('/lib/db');
@@ -126,8 +139,7 @@ var makeWindow = function(parentTab, person) {
 	
 	view.add(viewPhoto);
 	view.add(lblStatus);
-	view.add(btnPhoto);
-	view.add(btnDelete);
+	view.add(viewHoriz);
 	
 	if (!person.captured) {
 		// fugitive
@@ -202,6 +214,16 @@ var makeWindow = function(parentTab, person) {
 			width:200
 		});
 		
+		view.add(btnShowMap);
+
+		var btnBrag = Ti.UI.createButton({
+			title:L('LogInToBrag'),
+			top:10,
+			width:200
+		});
+		
+		view.add(btnBrag);
+
 		btnShowMap.addEventListener('click', function(e) {
 			// instantiate map object			
 			var MapWin = require('/ui/common/MapWindow');
@@ -210,8 +232,64 @@ var makeWindow = function(parentTab, person) {
 			// open map window with tab as parent
 			parentTab.open(mapWin, {animated:true});
 		});
+
+		// Require the ACS modules
+		var acs = require('lib/acs');
 		
-		view.add(btnShowMap);
+		if(acs.isLoggedIn()) {
+			// if logged in, the button's title is "Brag"
+			btnBrag.title = L('Brag');
+		}
+		
+		btnBrag.addEventListener('click', function() {
+			if (acs.isLoggedIn() == false) {
+				// if not logged in, show the login window
+				var LoginWin = require('ui/common/LoginWindow');
+				var loginwindow = new LoginWin;
+				
+				parentTab.open(loginwindow);
+				
+				// we must use a callback, because ACS functions are asynchronous
+				loginwindow.addEventListener('close', function(){
+					if(acs.isLoggedIn()) {
+						btnBrag.title = L('Brag');
+						addListBragsButton();
+					}
+				});
+			} else {
+				// otherwise, show the message window
+				var msgWin = require('ui/common/MessageWindow').messageWindow(person.title);
+				parentTab.open(msgWin);
+			}
+		});
+
+		var listBragsButtonAdded = false;
+		
+		function addListBragsButton() {
+			if(!listBragsButtonAdded) {
+				// if logged in, add a "list brags" button to the window
+				if(acs.isLoggedIn()) {
+					var listBragsButton = Ti.UI.createButton({
+						title:L('ListBrags'),
+						top:10,
+						height:Ti.UI.SIZE,
+						width:200
+					});
+					
+					listBragsButton.addEventListener('click', function() {
+							// open the brags list window
+							var BragsWindow = require('ui/common/BragsWindow');
+							parentTab.open(new BragsWindow);
+					});
+					
+					view.add(listBragsButton);
+					
+					listBragsButtonAdded = true;		
+				}
+			}
+		}
+		
+		addListBragsButton();
 	}
 	
 	win.add(view);
