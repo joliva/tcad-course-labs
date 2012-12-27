@@ -10,4 +10,15 @@
     <string name="Add">Ajouter</string>
     <string name="AddPhoto">Ajouter la Photo</string>
     <string name="ShowOnMap">Afficher Sur la Carte</string>
+    <string name="LogInToBrag">Connectez-vous pour Vanter!</string>
+    <string name="Brag">Se Vanter</string>
+    <string name="ListBrags">Liste Se Vante</string>
+	<string name="login">Connectez-vous</string>
+	<string name="logout">Vous Déconnecter</string>
+	<string name="username">nom d'utilisateur</string>
+	<string name="password">mot de passe</string>
+	<string name="confirm">confirmer</string>
+	<string name="createuser">Créer un Compte</string>
+	<string name="messages">Messsages</string>
+	<string name="pleasewait">s'il vous plaît attendre ...</string>
 </resources>

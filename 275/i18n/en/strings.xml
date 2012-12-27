@@ -10,4 +10,15 @@
     <string name="Add">Add</string>
     <string name="AddPhoto">Add Photo</string>
     <string name="ShowOnMap">Show On Map</string>
+    <string name="LogInToBrag">Log in to Brag!</string>
+    <string name="Brag">Brag</string>
+    <string name="ListBrags">List Brags</string>
+	<string name="login">Log in</string>
+	<string name="logout">Log out</string>
+	<string name="username">username</string>
+	<string name="password">password</string>
+	<string name="confirm">confirm</string>
+	<string name="createuser">Create Account</string>
+	<string name="messages">Messsages</string>
+	<string name="pleasewait">please wait ...</string>
 </resources>
