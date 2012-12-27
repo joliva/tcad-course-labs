@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="Fugitives">Fugitifs</string>
+    <string name="Captured">Capture</string>
+    <string name="NewFugitive">Fugitive Nouveau</string>
+    <string name="Busted">Busted</string>
+    <string name="StillAtLarge">Encore At-Large</string>
+    <string name="Delete">Effacer</string>
+    <string name="Capture">Capturer</string>
+    <string name="Add">Ajouter</string>
+    <string name="AddPhoto">Ajouter la Photo</string>
+    <string name="ShowOnMap">Afficher Sur la Carte</string>
+</resources>
