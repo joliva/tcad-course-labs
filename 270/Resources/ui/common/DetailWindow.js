@@ -1,6 +1,4 @@
-'use strict';
-
-var makeWindow = function(person) {		
+var makeWindow = function(parentTab, person) {		
 	var win = Ti.UI.createWindow({
 		title:person.title,
 		navBarHidden:false,
@@ -131,7 +129,9 @@ var makeWindow = function(person) {
 	view.add(btnPhoto);
 	view.add(btnDelete);
 	
-	if (!person.captured){
+	if (!person.captured) {
+		// fugitive
+		
 		var btnCapture = Ti.UI.createButton({
 			title:L('Capture'),
 			top:10,
@@ -193,6 +193,25 @@ var makeWindow = function(person) {
 		});
 		
 		view.add(btnCapture);
+	} else {
+		// captured
+		
+		var btnShowMap = Ti.UI.createButton({
+			title:L('ShowOnMap'),
+			top:10,
+			width:200
+		});
+		
+		btnShowMap.addEventListener('click', function(e) {
+			// instantiate map object			
+			var MapWin = require('/ui/common/MapWindow');
+			var mapWin = new MapWin(person);
+			
+			// open map window with tab as parent
+			parentTab.open(mapWin, {animated:true});
+		});
+		
+		view.add(btnShowMap);
 	}
 	
 	win.add(view);

@@ -1,4 +1,4 @@
-var makeWindow = function(parent, isFugitive) {
+var makeWindow = function(parentTab, isFugitive) {
 	var win = Ti.UI.createWindow({
 		title:isFugitive ? L('Fugitives') : L('Captured'),
 		navBarHidden:false,		// ensure heavyweight window
@@ -10,7 +10,7 @@ var makeWindow = function(parent, isFugitive) {
 				menuItem.addEventListener('click', function(e) {
 					var AddWindow = require('ui/common/AddWindow');
 					var awin = new AddWindow();
-					parent.open(awin, {animated:true});
+					parentTab.open(awin, {animated:true});
 				});
 			}			
 		}
@@ -22,8 +22,8 @@ var makeWindow = function(parent, isFugitive) {
 	
 	bountyTable.addEventListener('click', function(e) {
 		var DetailWindow = require('ui/common/DetailWindow');
-		var dwin = new DetailWindow(e.rowData);
-		parent.open(dwin, {animated:true});
+		var dwin = new DetailWindow(parentTab, e.rowData);
+		parentTab.open(dwin, {animated:true});
 	});
 	
 	var osname = Ti.Platform.osname;
@@ -37,7 +37,7 @@ var makeWindow = function(parent, isFugitive) {
 		button.addEventListener('click', function(e){
 			var AddWindow = require('ui/common/AddWindow');
 			var awin = new AddWindow();
-			parent.open(awin, {animated:true});
+			parentTab.open(awin, {animated:true});
 		});
 	}
 	
