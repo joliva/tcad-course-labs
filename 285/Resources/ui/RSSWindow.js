@@ -1,6 +1,7 @@
 var RSSWindow = function() {
 	// Builds the RSS reader window
-	require('lib/network').fetchRSSData('http://developer.appcelerator.com/blog/feed');
+	//require('lib/network').fetchRSSData('http://developer.appcelerator.com/blog/feed');
+	require('lib/network').fetchRSSData('http://lifehacker.com/index.xml');
 	var rssWindow = Titanium.UI.createWindow({  
 	    title:'',
 	    backgroundColor:'#fff',
@@ -19,18 +20,31 @@ var RSSWindow = function() {
 				color:'black',
 				hasChild:true,
 				link: tblData[i].postLink,
-				height:50
+				font: {
+					fontSize: '16dp',
+					fontFamily: 'Futura-CondensedMedium'
+				},
+				height:'30dp'
 			}));
 		}
 		tv.setData(tableRows);			
 	};
+	
 	// add click event listener to open blog post when row is tapped
 	tv.addEventListener('click',function(e) {
 		/*
 			Require in the article window module, instantiate a window, and pass the row data to it.
 			Then, open the resulting window with modal=true so it overlays the tab group
 		*/
+		
+		var ArticleWindow = require('ui/ArticleWindow');
+		var articleWindow = new ArticleWindow(e.rowData);
+		articleWindow.open({
+			animated: true,
+			modal:true
+		});
 	});
+	
 	// set up an event listener to populate data when it's available from the network
 	Ti.App.addEventListener('net:rssDataReturned', function(e){
 		// Set the window's title

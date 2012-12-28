@@ -2,7 +2,7 @@
 AppTabs = function() {
 	// Create our tab group and tabs
 	var tabGroup = Titanium.UI.createTabGroup();
-	
+
 	var RSSWindow = require('ui/RSSWindow');
 	var rssWindow = new RSSWindow();
 	var AboutWindow = require('ui/AboutWindow');

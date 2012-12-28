@@ -1,4 +1,4 @@
 (function() {
 	var ApplicationTabGroup = require('ui/TabGroup');
-	new ApplicationTabGroup().open();
+	var theApp = new ApplicationTabGroup().open();
 })();
