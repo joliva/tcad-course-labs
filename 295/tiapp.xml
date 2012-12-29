@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ti:app xmlns:ti="http://ti.appcelerator.org">
+    <property name="acs-oauth-secret-development" type="string">Rbrcui64uWezuxK7IBQydB0lRhe1GgmA</property>
+    <property name="acs-oauth-key-development" type="string">EUGkHWuzYXUWjTe2iOxuVL3VMYmGvKlW</property>
+    <property name="acs-api-key-development" type="string">WKXNmQvVyaRiRnxXmWv6Ewy0Zsr7TABN</property>
+    <property name="acs-oauth-secret-production" type="string">KsQxPvkbMvu0y4CoZc3dDZEWgchkjpj3</property>
+    <property name="acs-oauth-key-production" type="string">WspgWBo7vYIKBD3YfqSCu0bXaSdj9icW</property>
+    <property name="acs-api-key-production" type="string">geTC6sNpv9Ro7BhkCzd10rur5yAJaybC</property>
+    <property name="ti.android.runtime">v8</property>
+    <deployment-targets>
+        <target device="mobileweb">false</target>
+        <target device="iphone">true</target>
+        <target device="ipad">false</target>
+        <target device="android">true</target>
+        <target device="blackberry">false</target>
+    </deployment-targets>
+    <sdk-version>3.0.0.GA</sdk-version>
+    <id>com.olivalabs.bountyhunter295</id>
+    <name>BH_295</name>
+    <version>1.0.295</version>
+    <publisher>John Oliva</publisher>
+    <url>http://olivalabs.com</url>
+    <description>not specified</description>
+    <copyright>2012 by John Oliva</copyright>
+    <icon>appicon.png</icon>
+    <persistent-wifi>false</persistent-wifi>
+    <prerendered-icon>false</prerendered-icon>
+    <statusbar-style>default</statusbar-style>
+    <statusbar-hidden>false</statusbar-hidden>
+    <fullscreen>false</fullscreen>
+    <navbar-hidden>false</navbar-hidden>
+    <analytics>true</analytics>
+    <guid>c668cd2a-09c0-4b06-9830-06b31353e08e</guid>
+    <property name="ti.ui.defaultunit">system</property>
+    <iphone>
+        <orientations device="iphone">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+        </orientations>
+        <orientations device="ipad">
+            <orientation>Ti.UI.PORTRAIT</orientation>
+            <orientation>Ti.UI.UPSIDE_PORTRAIT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_LEFT</orientation>
+            <orientation>Ti.UI.LANDSCAPE_RIGHT</orientation>
+        </orientations>
+    </iphone>
+    <android xmlns:android="http://schemas.android.com/apk/res/android"/>
+    <mobileweb>
+        <precache/>
+        <splash>
+            <enabled>true</enabled>
+            <inline-css-images>true</inline-css-images>
+        </splash>
+        <theme>default</theme>
+    </mobileweb>
+    <modules>
+        <module platform="commonjs">ti.cloud</module>
+    </modules>
+</ti:app>
