@@ -42,13 +42,17 @@ var makeWindow = function(parentTab, person) {
 	var btnPhoto = Ti.UI.createButton({
 		title:L('AddPhoto'),
 		left:'11%',
-		width:'33%'
+		width:'33%',
+		font: {fontSize: '14dp'},
+		height: '28dp'
 	});
-	
+		
 	var btnDelete = Ti.UI.createButton({
 		title:L('Delete'),
 		left: '11%',
-		width:'33%'
+		width:'33%',
+		font: {fontSize: '14dp'},
+		height: '28dp'
 	});
 	
 	viewHoriz.add(btnPhoto);
@@ -67,74 +71,67 @@ var makeWindow = function(parentTab, person) {
 		var db = new DB();
 		var filename = 'photo' + person.id.toString() + '.png';
 		
-		// check if camera is supported, if not then show photo gallery	
-		if (Ti.Media.getIsCameraSupported() === true) {
-			Titanium.Media.showCamera({
-				success:function(event) {
-					// called when media returned from the camera
-					Ti.API.debug('Our type was: '+event.mediaType);
-					if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-						// store image in file
-						var imagePath = Ti.Filesystem.applicationDataDirectory + filename;
-						var f = Ti.Filesystem.getFile(imagePath);
-						f.write(event.media);	// write to the file
-						
-						// update image URL in database
-						db.addPhoto(person.id, imagePath);
-						
-						// update photo on detail view
-						viewPhoto.image = event.media
-					} else {
-						alert("got the wrong type back ="+event.mediaType);
-					}
-				},
-				cancel:function() {
-					// called when user cancels taking a picture
-				},
-				error:function(error) {
-					// called when there's an error
-					var a = Titanium.UI.createAlertDialog({title:'Camera'});
-					a.setMessage('Unexpected error: ' + error.code);
-					a.show();
-				},
-				saveToPhotoGallery:true,
-				allowEditing:true,
-				mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
-			});
-		} else { // no camera supported - show photos
-			Titanium.Media.openPhotoGallery({
-				success:function(event) {
-					// called when media returned from the camera
-					Ti.API.debug('Our type was: '+event.mediaType);
-					if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
-						// store image in file
-						var imagePath = Ti.Filesystem.applicationDataDirectory + filename;
-						var f = Ti.Filesystem.getFile(imagePath);
-						f.write(event.media);	// write to the file
-						
-						// update image URL in database
-						db.addPhoto(person.id, imagePath);
-						
-						// update photo on detail view
-						viewPhoto.image = event.media
-					} else {
-						alert("got the wrong type back ="+event.mediaType);
-					}
-				},
-				cancel:function() {
-					// called when user cancels taking a picture
-				},
-				error:function(error) {
-					// called when there's an error
-					var a = Titanium.UI.createAlertDialog({title:'Camera'});
-					a.setMessage('Unexpected error: ' + error.code);
-					a.show();
-				},
-				saveToPhotoGallery:false,
-				allowEditing:true,
-				mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
-			});
-		}
+		// try to show camera, on error show photo gallery	
+		Titanium.Media.showCamera({
+			success:function(event) {
+				// called when media returned from the camera
+				Ti.API.debug('Our type was: '+event.mediaType);
+				if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+					// store image in file
+					var imagePath = Ti.Filesystem.applicationDataDirectory + filename;
+					var f = Ti.Filesystem.getFile(imagePath);
+					f.write(event.media);	// write to the file
+					
+					// update image URL in database
+					db.addPhoto(person.id, imagePath);
+					
+					// update photo on detail view
+					viewPhoto.image = event.media
+				} else {
+					alert("got the wrong type back ="+event.mediaType);
+				}
+			},
+			cancel:function() {
+				// called when user cancels taking a picture
+			},
+			error:function(error) {
+				Titanium.Media.openPhotoGallery({
+					success:function(event) {
+						// called when media returned from the camera
+						Ti.API.debug('Our type was: '+event.mediaType);
+						if(event.mediaType == Ti.Media.MEDIA_TYPE_PHOTO) {
+							// store image in file
+							var imagePath = Ti.Filesystem.applicationDataDirectory + filename;
+							var f = Ti.Filesystem.getFile(imagePath);
+							f.write(event.media);	// write to the file
+							
+							// update image URL in database
+							db.addPhoto(person.id, imagePath);
+							
+							// update photo on detail view
+							viewPhoto.image = event.media
+						} else {
+							alert("got the wrong type back ="+event.mediaType);
+						}
+					},
+					cancel:function() {
+						// called when user cancels taking a picture
+					},
+					error:function(error) {
+						// called when there's an error
+						var a = Titanium.UI.createAlertDialog({title:'Camera'});
+						a.setMessage('Unexpected error: ' + error.code);
+						a.show();
+					},
+					saveToPhotoGallery:false,
+					allowEditing:true,
+					mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
+				});
+			},
+			saveToPhotoGallery:true,
+			allowEditing:true,
+			mediaTypes:[Ti.Media.MEDIA_TYPE_PHOTO]
+		});
 	});
 	
 	view.add(viewPhoto);
@@ -147,7 +144,9 @@ var makeWindow = function(parentTab, person) {
 		var btnCapture = Ti.UI.createButton({
 			title:L('Capture'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		var bustedResponder = function (e) {
@@ -211,7 +210,9 @@ var makeWindow = function(parentTab, person) {
 		var btnShowMap = Ti.UI.createButton({
 			title:L('ShowOnMap'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		view.add(btnShowMap);
@@ -219,7 +220,9 @@ var makeWindow = function(parentTab, person) {
 		var btnBrag = Ti.UI.createButton({
 			title:L('LogInToBrag'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		view.add(btnBrag);
@@ -273,7 +276,9 @@ var makeWindow = function(parentTab, person) {
 						title:L('ListBrags'),
 						top:10,
 						height:Ti.UI.SIZE,
-						width:200
+						width:200,
+						font: {fontSize: '14dp'},
+						height: '28dp'
 					});
 					
 					listBragsButton.addEventListener('click', function() {
