@@ -9,13 +9,8 @@ var map = function(person) {
 			pincolor: Ti.Map.ANNOTATION_RED
 	});
 	
-	if (person.url !== '') {
-		var f = Ti.Filesystem.getFile(person.url);
-		//annotations[0].image = f.read();
-	}
-	
 	var mapView = Titanium.Map.createView({
-	    mapType: Titanium.Map.STANDARD_TYPE,
+	    mapType: Titanium.Map.HYBRID_TYPE,
 	    region: {
 	    	latitude:person.capturedLat,
 	    	longitude:person.capturedLon,
@@ -26,10 +21,10 @@ var map = function(person) {
 	    regionFit:true,
 	    userLocation:false,
 	});
-	
-	mapView.addAnnotation(annotation);
 
-	win.add(mapView);
+	mapView.addAnnotation(annotation);
+	
+	win.add(mapView);	
 	return win;
 };
 
