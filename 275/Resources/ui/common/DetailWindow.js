@@ -42,13 +42,18 @@ var makeWindow = function(parentTab, person) {
 	var btnPhoto = Ti.UI.createButton({
 		title:L('AddPhoto'),
 		left:'11%',
-		width:'33%'
+		width:'33%',
+		font: {fontSize: '14dp'},
+		height: '28dp'
+
 	});
 	
 	var btnDelete = Ti.UI.createButton({
 		title:L('Delete'),
 		left: '11%',
-		width:'33%'
+		width:'33%',
+		font: {fontSize: '14dp'},
+		height: '28dp'
 	});
 	
 	viewHoriz.add(btnPhoto);
@@ -147,7 +152,9 @@ var makeWindow = function(parentTab, person) {
 		var btnCapture = Ti.UI.createButton({
 			title:L('Capture'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		var bustedResponder = function (e) {
@@ -211,7 +218,9 @@ var makeWindow = function(parentTab, person) {
 		var btnShowMap = Ti.UI.createButton({
 			title:L('ShowOnMap'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		view.add(btnShowMap);
@@ -219,7 +228,9 @@ var makeWindow = function(parentTab, person) {
 		var btnBrag = Ti.UI.createButton({
 			title:L('LogInToBrag'),
 			top:10,
-			width:200
+			width:200,
+			font: {fontSize: '14dp'},
+			height: '28dp'
 		});
 		
 		view.add(btnBrag);
@@ -273,7 +284,9 @@ var makeWindow = function(parentTab, person) {
 						title:L('ListBrags'),
 						top:10,
 						height:Ti.UI.SIZE,
-						width:200
+						width:200,
+						font: {fontSize: '14dp'},
+						height: '28dp'
 					});
 					
 					listBragsButton.addEventListener('click', function() {
