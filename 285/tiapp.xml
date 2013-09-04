@@ -1,20 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ti:app xmlns:ti="http://ti.appcelerator.org">
-    <sdk-version>2.1.4.GA</sdk-version>
+    <property name="acs-oauth-secret-production" type="string">i9v0eGG6IyYzm9Zc85J58HDyWWDq7v6t</property>
+    <property name="acs-oauth-key-production" type="string">fzOfQpHQITssGshW96REjTdQceHjcpFY</property>
+    <property name="acs-api-key-production" type="string">NWRGoVas81CCDn6idOoppimix7WImnaQ</property>
+    <property name="acs-oauth-secret-development" type="string">mBS9ZHP91wFUW7pCTBcy5J0SiX2AijZ2</property>
+    <property name="acs-oauth-key-development" type="string">U7mZ4qDZfVqQ6KkEbPUyJ0x3qMzO8Vcq</property>
+    <property name="acs-api-key-development" type="string">53fxzxV7aXJI0SjI0oukdpiykjuZtmUd</property>
+    <sdk-version>3.1.1.GA</sdk-version>
     <deployment-targets>
-        <target device="mobileweb">true</target>
+        <target device="tizen">false</target>
+        <target device="mobileweb">false</target>
         <target device="blackberry">false</target>
         <target device="iphone">true</target>
         <target device="ipad">true</target>
         <target device="android">true</target>
     </deployment-targets>
-    <id>com.appc.lab285</id>
-    <name>Lab285</name>
+    <id>com.olivalabs.bountyhunter285</id>
+    <name>BountyHunter285</name>
     <version>1.0</version>
-    <publisher>Appcelerator</publisher>
-    <url>http://appcelerator.com</url>
+    <publisher>John Oliva</publisher>
+    <url>http://olivalabs.com</url>
     <description>not specified</description>
-    <copyright>2011 by Appcelerator</copyright>
+    <copyright>2013 by John Oliva</copyright>
     <icon>appicon.png</icon>
     <persistent-wifi>false</persistent-wifi>
     <prerendered-icon>false</prerendered-icon>
@@ -23,7 +30,7 @@
     <fullscreen>false</fullscreen>
     <navbar-hidden>false</navbar-hidden>
     <analytics>true</analytics>
-    <guid>8c3de54d-0f0e-4f5e-9616-d41f5683a933</guid>
+    <guid>4397753a-cec5-46ce-b738-050c49c6e21f</guid>
     <iphone>
         <orientations device="iphone">
             <orientation>Ti.UI.PORTRAIT</orientation>
@@ -36,5 +43,7 @@
         </orientations>
     </iphone>
     <android xmlns:android="http://schemas.android.com/apk/res/android"/>
-    <modules/>
+    <modules>
+        <module platform="commonjs">ti.cloud</module>
+    </modules>
 </ti:app>
